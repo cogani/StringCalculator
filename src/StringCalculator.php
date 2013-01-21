@@ -20,11 +20,11 @@ class StringCalculator {
 
         $token = strtok($string, ',');
         if ($token)
-            $result = $token;
-
-        $token = strtok(',');
-        if ($token)
             $result = $result + $token;
+
+        while ($token = strtok(',')) {
+            $result = $result + $token;
+        }
 
         return $result;
     }
