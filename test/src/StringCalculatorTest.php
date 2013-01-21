@@ -4,29 +4,22 @@ require_once '../../src/StringCalculator.php';
 
 class StringCalculatorTest extends PHPUnit_Framework_TestCase {
 
-    public function testAdd0Parameters() {
-        $stCalculator = new StringCalculator();
-        $this->assertEquals(0, $stCalculator->add(""));
+    public function getArgumentsTestCases() {
+        return array(
+            "ningun argumento" => array(1, "1"),
+            "1 arg" => array(0, ""),
+            "2 arg" => array(2, "2"),
+            "3 arg" => array(23, "12.5,10.5"),
+            "4 arg" => array(34, "12.5,10.5,10,    1")
+        );
     }
 
-    public function testAdd1Parameters() {
+    /**
+     * @dataProvider getArgumentsTestCases
+     */
+    public function testAdd4Parameters($expected, $argument) {
         $stCalculator = new StringCalculator();
-        $this->assertEquals(2, $stCalculator->add("2"));
-    }
-
-    public function testAdd2Parameters() {
-        $stCalculator = new StringCalculator();
-        $this->assertEquals(23, $stCalculator->add("12.5,10.5"));
-    }
-
-    public function testAdd3Parameters() {
-        $stCalculator = new StringCalculator();
-        $this->assertEquals(33, $stCalculator->add("12.5,10.5,10"));
-    }
-
-    public function testAdd4Parameters() {
-        $stCalculator = new StringCalculator();
-        $this->assertEquals(34, $stCalculator->add("12.5,10.5,10,    1"));
+        $this->assertEquals($expected, $stCalculator->add($argument));
     }
 
 }
