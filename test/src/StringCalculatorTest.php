@@ -6,9 +6,8 @@ class StringCalculatorTest extends PHPUnit_Framework_TestCase {
    
 
     public function testAdd() {
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $stCalculator = new StringCalculator();
+          $this->assertEquals(0, $stCalculator->add(""));
     }
 
 }
