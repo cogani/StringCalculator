@@ -15,15 +15,17 @@ class StringCalculator {
     public function add($string) {
         $result = 0;
 
-        if ($string == NULL || $string == "")
+        if ($string == NULL)
             return $result;
+        
+        if(strrpos($string, ",\n")) return "error";
 
-        $token = strtok($string, ',');
-        if ($token)
-            $result = $result + $token;
+        $token = strtok($string, ",\n");
 
-        while ($token = strtok(',')) {
+        while ($token !== FALSE) {
+            echo "Comprabando:'$token'";
             $result = $result + $token;
+            $token = strtok(",\n");
         }
 
         return $result;
