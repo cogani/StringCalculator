@@ -17,8 +17,9 @@ class StringCalculator {
 
         if ($string == NULL)
             return $result;
-        
-        if(strrpos($string, ",\n")) return "error";
+
+        if($this->checkDelimitiers($string)=="error")
+            return "error";
 
         $token = strtok($string, ",\n");
 
@@ -29,6 +30,11 @@ class StringCalculator {
         }
 
         return $result;
+    }
+
+    private function checkDelimitiers($string) {
+        if (strrpos($string, ",\n"))
+            return "error";
     }
 
 }
