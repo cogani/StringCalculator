@@ -1,10 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of StringCalculator
  *
@@ -13,28 +7,46 @@
 class StringCalculator {
 
     public function add($string) {
+        $strDelimitiers = ",\n";
+
         $result = 0;
 
         if ($string == NULL)
             return $result;
 
-        if($this->checkDelimitiers($string)=="error")
-            return "error";
+        if ($this->checkTwoDelimitiersTogether($string) == "DelimitiersException")
+            return "DelimitiersException";
 
-        $token = strtok($string, ",\n");
+        $newDelimitier = $this->extractNewDelimitiers($string);
+        if ($newDelimitier != NULL)
+            $strDelimitiers .= $newDelimitier;
+
+        
+        $token = strtok($string, $strDelimitiers);
 
         while ($token !== FALSE) {
-            echo "Comprabando:'$token'";
             $result = $result + $token;
-            $token = strtok(",\n");
+            $token = strtok($strDelimitiers);
         }
 
         return $result;
     }
 
-    private function checkDelimitiers($string) {
-        if (strrpos($string, ",\n"))
-            return "error";
+    public function checkTwoDelimitiersTogether($string) {
+        if (strrpos($string, ",\n") !== FALSE || strrpos($string, "\n,") !== FALSE)
+            return "DelimitiersException";
+    }
+
+    public function extractNewDelimitiers($expression) {
+        $newDelimitier = NULL;
+
+        if (!strncmp($expression, "//", 2)) {
+            $newDelimitier = $expression{2};
+            if ($expression{3} != "\n")
+                return "ParseError: Falta finalizador";
+        }
+
+        return $newDelimitier;
     }
 
 }
